@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.lzp.mapper.ItemMapper">
+    <select id="selectAll" resultType="ItemInfo">
+        SELECT * FROM item_info
+    </select>
+    <select id="selectItemInfoById" parameterType="String" resultType="ItemInfo">
+        SELECT * FROM item_info WHERE item_info.item_id = #{id}
+    </select>
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM item_info WHERE item_id = #{id}
+    </delete>
+    <insert id="save" parameterType="ItemInfo">
+        INSERT INTO item_info VALUES(
+            #{item_id},
+            #{item_name},
+            #{item_type},
+            #{item_price}
+        )
+    </insert>
+<!--    多条件动态查询-->
+    <select id="selectByVo" parameterType="ItemInfoVo" resultType="ItemInfo">
+        SELECT * FROM item_info
+        <where>
+            <if test="itemInfo.item_id != null and itemInfo.item_id != '' ">
+                item_id = #{itemInfo.item_id}
+            </if>
+            <if test="itemInfo.item_name != null and itemInfo.item_name != '' ">
+                AND item_name LIKE "%"#{itemInfo.item_name}"%"
+            </if>
+            <if test="itemInfo.item_type != null and itemInfo.item_type != '' ">
+                AND item_type = #{itemInfo.item_type}
+            </if>
+            <if test="itemInfo.item_price != null and itemInfo.item_price != '' ">
+                AND item_id = #{itemInfo.item_id}
+            </if>
+        </where>
+    </select>
+
+</mapper>
