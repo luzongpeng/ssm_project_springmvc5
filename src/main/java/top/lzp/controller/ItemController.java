@@ -3,10 +3,7 @@ package top.lzp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import top.lzp.bean.ItemInfo;
 import top.lzp.bean.ItemInfoVo;
@@ -147,5 +144,19 @@ public class ItemController {
              ) {
             System.out.println(string);
         }
+    }
+
+    //使用restFul开发
+    //查询一个游戏信息，并且显示在内容页
+    @RequestMapping(value = "{item_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ItemInfo restFul(@PathVariable("item_id") String id,Model model){
+        //查询
+
+        ItemInfo item = itemService.selectItemInfoById(id);
+        model.addAttribute("item",item);
+        //返回页面
+        //return "item_info";
+        return item;
     }
 }

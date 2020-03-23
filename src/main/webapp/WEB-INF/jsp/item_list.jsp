@@ -91,6 +91,8 @@
 	                                                <td data-value="1">
 	                                                	<a herf="#" id="edit_btn" class="btn btn-xs btn-info" data-toggle="modal" data-target="#editLayer" onclick="editGoods('${item.item_id}')">修改</a>
 	                                                	<a herf="#"  id="del_btn" class="btn btn-xs btn-danger" onclick="deleteItem('${item.item_id}')">删除</a>
+	                                                	<a herf="#"  id="del_btn2" class="btn btn-xs btn-danger" onclick="window.location='${pageContext.request.contextPath }/item/${item.item_id}'">查询</a>
+	                                                	<a herf="#"  id="del_btn3" class="btn btn-xs btn-warning" onclick="restFul(${item.item_id})">ajax</a>
 	                                                </td>
 	                                           	</tr>
                                         	</c:forEach>
@@ -385,7 +387,17 @@
                     }
                 })
             }
-
+            //restFul
+            function restFul(id) {
+                $.ajax({
+                   type:"get",
+                   url:"${pageContext.request.contextPath}/item/"+id,
+                   success:function (data) {
+                       <%--window.location="${pageContext.request.contextPath}/item/"+id;--%>
+                       alert(data.item_name)
+                   }
+                });
+            }
 
 		</script>
     </body>
